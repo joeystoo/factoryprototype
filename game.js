@@ -6,31 +6,47 @@
         stone.src = "https://www.theappguruz.com/app/uploads/2015/06/give-shadow.png"
         const brick = new Image()
         brick.src = "https://img.itch.zone/aW1hZ2UvMTYxNzE2Mi8xMTAzMjk5My5wbmc=/347x500/jQ%2BtLq.png"
-        const mapping = []
-          for(let i = 0; i < 30; i++){
-            mapping.push([])
-            for(let j = 0; j < 50; j++){
-              mapping[i].push(0)
-            }
+        const rands = []
+        for(let i = 0; i < 300; i++){
+          rands.push([])
+          for(let j = 0; j < 500;j++){
+            rands[i].push(Math.ceil(Math.random()*50))
           }
+        }
+        const camera = {
+          x: 0,
+          y: 0,
+        }
           function update(){
             requestAnimationFrame(update)
             ctx.clearRect(0,0,canvas.width,canvas.height)
-          }
-        function initialize(){
-          for(let i = 0; i < mapping.length; i++){
-            for(let j = 0; j < mapping[0].length; j++){
-              if(Math.ceil(Math.random()*50)<35){
-          ctx.drawImage(grass,50*j,50*i,50,50)
+            for(let i = Math.ceil(camera.y/50); i < Math.ceil(camera.y/50)+50; i++){
+            for(let j = Math.ceil(camera.x/50); j < Math.ceil(camera.x/50)+70; j++){
+              if(rands[i][j]&&rands[i][j]<35){
+          ctx.drawImage(grass,50*j-camera.x,50*i-camera.y,50,50)
               }
-              else if(Math.ceil(Math.random()*15)!==1){
-                ctx.drawImage(brick,50*j,50*i,50,50)
+              else if(rands[i][j]&&rands[i][j]<50){
+                ctx.drawImage(brick,50*j-camera.x,50*i-camera.y,50,50)
               }
               else{
-                ctx.drawImage(stone,50*j,50*i,50,50)
+                ctx.drawImage(stone,50*j-camera.x,50*i-camera.y,50,50)
               }
             }
         }
-        }
-        initialize()
+          }
         update()
+        window.addEventListener("keydown",keydownHandler,false)
+        function keydownHandler(e){
+          if(e.key==="w"&&camera.y>0){
+            camera.y-=50
+          }
+          else if(e.key==="a"&&camera.x>0){
+            camera.x-=50
+          }
+          else if(e.key==="s"&&camera.y<12500){
+            camera.y+=50
+        }
+        else if(e.key==="d"&&camera.x<21500){
+          camera.x+=50 
+        }
+      }
