@@ -5,7 +5,7 @@
         const stone = new Image()
         stone.src = "https://www.theappguruz.com/app/uploads/2015/06/give-shadow.png"
         const brick = new Image()
-        const balanceboard = document.getElementById("balanceBoard")
+        const balanceboard = document.getElementById("balanceboard")
         let balance = 100
         let farmerCost = 75
         brick.src = "https://img.itch.zone/aW1hZ2UvMTYxNzE2Mi8xMTAzMjk5My5wbmc=/347x500/jQ%2BtLq.png"
@@ -56,11 +56,27 @@
           camera.x+=50 
         }
       }
+      const unitMap = []
+      for(let i = 0; i < 300; i++){
+        unitMap.push([])
+        for(let j = 0; j < 500; j++){
+          unitMap[i].push(" ")
+        }
+      }
       function hireFarmer(){
         if(balance >= farmerCost){
           balance -= farmerCost
           farmerCost *= 1.25
           farmerCost = Math.ceil(farmerCost)
-          
+          for(let i = Math.ceil(camera.y/50); i < Math.ceil(camera.y/50)+50; i++){
+            for(let j = Math.ceil(camera.x/50); j < Math.ceil(camera.x/50)+70;j++){
+              if(typeof unitMap[i][j] !== "object"){
+                unitMap[i][j]= {
+                  speed: 4
+                }
+                break
+              }
+            }
+          }
         }
       }
