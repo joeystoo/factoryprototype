@@ -5,7 +5,12 @@
         const stone = new Image()
         stone.src = "https://www.theappguruz.com/app/uploads/2015/06/give-shadow.png"
         const brick = new Image()
+        const balanceboard = document.getElementById("balanceBoard")
+        let balance = 100
+        let farmerCost = 75
         brick.src = "https://img.itch.zone/aW1hZ2UvMTYxNzE2Mi8xMTAzMjk5My5wbmc=/347x500/jQ%2BtLq.png"
+        const farmer = new Image()
+        farmer.src = "data:image/jpeg;base64,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"
         const rands = []
         for(let i = 0; i < 300; i++){
           rands.push([])
@@ -19,6 +24,7 @@
         }
           function update(){
             requestAnimationFrame(update)
+            balanceboard.innerHTML="Balance: $"+balance
             ctx.clearRect(0,0,canvas.width,canvas.height)
             for(let i = Math.ceil(camera.y/50); i < Math.ceil(camera.y/50)+50; i++){
             for(let j = Math.ceil(camera.x/50); j < Math.ceil(camera.x/50)+70; j++){
@@ -48,5 +54,13 @@
         }
         else if(e.key==="d"&&camera.x<21500){
           camera.x+=50 
+        }
+      }
+      function hireFarmer(){
+        if(balance >= farmerCost){
+          balance -= farmerCost
+          farmerCost *= 1.25
+          farmerCost = Math.ceil(farmerCost)
+          
         }
       }
